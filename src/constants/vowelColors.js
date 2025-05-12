@@ -1,0 +1,17 @@
+export default {
+  AA: "#8dd3c7",
+  AE: "#ffffb3",
+  AH: "#bebada",
+  AO: "#fb8072",
+  AW: "#80b1d3",
+  AY: "#fdb462",
+  EH: "#b3de69",
+  ER: "#fccde5",
+  EY: "#d9d9d9",
+  IH: "#bc80bd",
+  IY: "#ccebc5",
+  OW: "#ffed6f",
+  OY: "#66c2a5",
+  UH: "#fc8d62",
+  UW: "#8da0cb",
+};
