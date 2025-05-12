@@ -8,7 +8,7 @@ export default {
   AY: "#ffa726",
   EH: "#79d043",
   ER: "#ff87d2",
-  EY: "#999999",
+  EY: "#f042c9",
   IH: "#b23ec7",
   IY: "#a3f9a1",
   OW: "#ffd600",

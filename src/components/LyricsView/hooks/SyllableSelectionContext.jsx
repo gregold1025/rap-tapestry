@@ -2,7 +2,10 @@
 import { createContext, useContext, useState, useMemo } from "react";
 import transcriptionData from "../../../assets/93Til/lyric-transcription.json";
 import { extractVowels } from "../../../utils/extractVowels";
-import { MAX_WILDCARD_SKIPS } from "../../../constants/matching";
+import {
+  MAX_WILDCARD_SKIPS,
+  MINIMUM_MATCH_LENGTH,
+} from "../../../constants/matching";
 
 const SyllableSelectionContext = createContext();
 
@@ -66,7 +69,11 @@ export function SyllableSelectionProvider({ children }) {
     // Generate subsequences of length >= 2
     const subsets = [];
     for (let start = 0; start < selectedVowels.length; start++) {
-      for (let end = start + 1; end <= selectedVowels.length; end++) {
+      for (
+        let end = start + MINIMUM_MATCH_LENGTH;
+        end <= selectedVowels.length;
+        end++
+      ) {
         subsets.push(selectedVowels.slice(start, end));
       }
     }
