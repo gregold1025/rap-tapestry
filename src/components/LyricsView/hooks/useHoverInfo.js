@@ -17,10 +17,10 @@ export function useHoverInfo() {
   }
 
   function setSyllableHover({ vowel, syllableIndex, totalSyllables, phones }) {
-    console.log("🟣 Hovered Syllable");
-    console.log("➡️ Vowel:", vowel);
-    console.log("📍 Syllable Index:", syllableIndex + 1, "of", totalSyllables);
-    console.log("📞 Word Phones:", phones);
+    // console.log("🟣 Hovered Syllable");
+    // console.log("➡️ Vowel:", vowel);
+    // console.log("📍 Syllable Index:", syllableIndex + 1, "of", totalSyllables);
+    // console.log("📞 Word Phones:", phones);
 
     setHoverData({
       type: "syllable",
@@ -32,7 +32,7 @@ export function useHoverInfo() {
   }
 
   function clearHover() {
-    console.log("❌ Hover cleared");
+    // console.log("❌ Hover cleared");
     setHoverData(null);
   }
 

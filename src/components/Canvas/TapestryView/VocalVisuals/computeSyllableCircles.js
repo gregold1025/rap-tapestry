@@ -11,15 +11,15 @@ export function computeSyllableCircles({
 }) {
   const syllables = [];
 
-  lines.forEach((line) => {
+  lines.forEach((line, lineIdx) => {
     if (!line.words) return;
 
-    line.words.forEach((word) => {
+    line.words.forEach((word, wordIdx) => {
       if (word.start == null || word.end == null) return;
 
       const syllableCount = word.nSyllables || 1;
       const wordDuration = word.end - word.start;
-      const vowels = extractVowels(word.phones);
+      const vowels = extractVowels(word.phones?.[0]);
       const centroids = word.centroid ?? [];
       const centroidSpacing = centroids.length / syllableCount;
 
@@ -30,17 +30,24 @@ export function computeSyllableCircles({
         const color = parseInt(colorHex.replace("#", "0x"));
 
         const centroidIndex = Math.floor(i * centroidSpacing);
-        const centroid = centroids[centroidIndex] ?? 0.5; // Default center
+        const centroid = centroids[centroidIndex] ?? 0.5;
         const verticalOffset = (centroid * 0.5 - 0.5) * rowHeight;
 
+        const x = timeToX(syllableTime);
+        const y =
+          rowHeight * Math.floor(syllableTime / secondsPerRow) +
+          rowHeight * 0.5 +
+          verticalOffset;
+
+        const id = `${lineIdx}-${wordIdx}-${i}`;
+
         syllables.push({
-          x: timeToX(syllableTime),
-          y:
-            rowHeight * Math.floor(syllableTime / secondsPerRow) +
-            rowHeight * 0.5 +
-            3 * verticalOffset,
-          radius: 5,
+          id,
+          x,
+          y,
+          radius: 6,
           color,
+          vowel,
         });
       }
     });

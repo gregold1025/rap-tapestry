@@ -3,6 +3,7 @@ import { WordBlock } from "./WordBlock";
 
 export function WordLine({
   line,
+  lineIdx,
   playheadTime,
   isCurrent,
   hoverData,
@@ -23,10 +24,12 @@ export function WordLine({
         className="words-container"
         style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}
       >
-        {line.words?.map((word, idx) => (
+        {line.words?.map((word, wordIdx) => (
           <WordBlock
-            key={idx}
+            key={wordIdx}
             word={word}
+            lineIdx={lineIdx}
+            wordIdx={wordIdx}
             playheadTime={playheadTime}
             hoverData={hoverData}
             onWordHover={onWordHover}

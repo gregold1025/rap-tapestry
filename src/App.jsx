@@ -9,6 +9,7 @@ import {
 import { usePlayheadClock } from "./components/AudioEngine/usePlayheadClock";
 import { LyricsView } from "./components/LyricsView/LyricsView";
 import { calculateCanvasSize } from "./utils/calculateCanvasSize";
+import { SyllableSelectionProvider } from "./components/LyricsView/hooks/SyllableSelectionContext";
 
 const CONTROL_BAR_HEIGHT = 80;
 
@@ -66,7 +67,9 @@ function AppWithAudio() {
 export default function App() {
   return (
     <AudioProvider>
-      <AppWithAudio />
+      <SyllableSelectionProvider>
+        <AppWithAudio />
+      </SyllableSelectionProvider>
     </AudioProvider>
   );
 }

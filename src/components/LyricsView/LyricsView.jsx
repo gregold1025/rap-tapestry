@@ -13,7 +13,6 @@ export function LyricsView({ playheadTime, height }) {
 
   let lastValidLineIndex = 0;
 
-  // Find the current line (whose start <= time < next line's start)
   const currentLineIndex = lines.findIndex((line, idx) => {
     const start = line.words?.[0]?.start ?? Infinity;
     const nextStart = lines[idx + 1]?.words?.[0]?.start ?? Infinity;
@@ -46,6 +45,7 @@ export function LyricsView({ playheadTime, height }) {
         <WordLine
           key={idx}
           line={line}
+          lineIdx={lastValidLineIndex + idx}
           playheadTime={playheadTime}
           isCurrent={idx === 0}
           hoverData={hoverData}

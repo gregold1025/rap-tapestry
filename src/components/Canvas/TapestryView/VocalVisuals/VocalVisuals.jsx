@@ -5,6 +5,7 @@ import { computeLayout } from "../computeTapestryLayout";
 import { computeSyllableCircles } from "./computeSyllableCircles";
 import { computeWordRectangles } from "./computeWordRectangles";
 import paddingFactor from "../../../../constants/canvasPadding";
+import { useSyllableSelection } from "../../../LyricsView/hooks/SyllableSelectionContext";
 
 export function VocalVisuals({
   width,
@@ -39,6 +40,8 @@ export function VocalVisuals({
       })
     : [];
 
+  const { selectedIds, matchedIds } = useSyllableSelection();
+
   const draw = (g) => {
     g.clear();
 
@@ -57,7 +60,17 @@ export function VocalVisuals({
 
     if (showSyllables) {
       syllables.forEach((syl) => {
-        g.fill(syl.color).circle(syl.x, syl.y, syl.radius).fill();
+        const isSelected = selectedIds.includes(syl.id);
+        const isMatch = matchedIds.has(syl.id);
+
+        const fillColor = isSelected || isMatch ? syl.color : 0xcccccc;
+
+        g.fill(fillColor).circle(syl.x, syl.y, syl.radius);
+
+        if (isSelected) {
+          //g.setStrokeStyle({ width: 2, color: 0xff0000 });
+          //g.stroke();
+        }
       });
     }
   };
