@@ -1,32 +1,7 @@
 // src/components/Canvas/TapestryView/VocalVisuals/computeSyllableCircles.js
 
 import vowelColors from "../../../../constants/vowelColors";
-
-// Vowel set
-const VOWELS = new Set([
-  "AA",
-  "AE",
-  "AH",
-  "AO",
-  "AW",
-  "AY",
-  "EH",
-  "ER",
-  "EY",
-  "IH",
-  "IY",
-  "OW",
-  "OY",
-  "UH",
-  "UW",
-]);
-
-function extractVowels(phoneStr) {
-  return String(phoneStr ?? "")
-    .split(" ")
-    .map((p) => p.replace(/[0-9]/g, ""))
-    .filter((p) => VOWELS.has(p));
-}
+import { extractVowels } from "../../../../utils/extractVowels";
 
 export function computeSyllableCircles({
   lines,

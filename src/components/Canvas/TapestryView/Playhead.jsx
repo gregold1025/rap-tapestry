@@ -1,5 +1,6 @@
 import { computeLayout } from "./computeTapestryLayout";
 import transcriptionData from "../../../assets/93Til/lyric-transcription.json";
+import paddingFactor from "../../../constants/canvasPadding";
 
 export function Playhead({ width, height, time }) {
   // Pull consistent layout settings
@@ -9,7 +10,8 @@ export function Playhead({ width, height, time }) {
     height,
   });
 
-  const timeToX = (t) => (t % secondsPerRow) * (totalWidth / secondsPerRow);
+  const timeToX = (t) =>
+    (t % secondsPerRow) * ((totalWidth * paddingFactor) / secondsPerRow);
   const currentX = timeToX(time);
   const currentRow = Math.floor(time / secondsPerRow);
   const currentY = currentRow * rowHeight;

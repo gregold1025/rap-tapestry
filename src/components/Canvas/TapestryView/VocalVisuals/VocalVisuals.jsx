@@ -4,6 +4,7 @@ import transcriptionData from "../../../../assets/93Til/lyric-transcription.json
 import { computeLayout } from "../computeTapestryLayout";
 import { computeSyllableCircles } from "./computeSyllableCircles";
 import { computeWordRectangles } from "./computeWordRectangles";
+import paddingFactor from "../../../../constants/canvasPadding";
 
 export function VocalVisuals({
   width,
@@ -17,7 +18,8 @@ export function VocalVisuals({
     height,
   });
 
-  const timeToX = (t) => (t % secondsPerRow) * (totalWidth / secondsPerRow);
+  const timeToX = (t) =>
+    (t % secondsPerRow) * ((totalWidth * paddingFactor) / secondsPerRow);
 
   const words = showWordRects
     ? computeWordRectangles({
