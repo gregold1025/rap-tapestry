@@ -61,7 +61,7 @@ export function WordBlock({
         onMouseEnter={() => onWordHover?.(word)}
         onMouseLeave={onHoverEnd}
         style={{
-          fontWeight: isCurrent ? "bold" : "normal",
+          //fontWeight: isCurrent ? "bold" : "normal",
           fontSize: 30,
           backgroundColor: isHovered ? "yellow" : "transparent",
         }}

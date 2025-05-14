@@ -4,7 +4,7 @@ import transcriptionData from "../../../../assets/93Til/lyric-transcription.json
 import { computeLayout } from "../computeTapestryLayout";
 import { computeSyllableCircles } from "./computeSyllableCircles";
 import { computeWordRectangles } from "./computeWordRectangles";
-import paddingFactor from "../../../../constants/canvasPadding";
+import { paddingFactor } from "../../../../constants/canvasPadding";
 import { useSyllableSelection } from "../../../LyricsView/hooks/SyllableSelectionContext";
 
 export function VocalVisuals({

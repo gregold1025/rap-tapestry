@@ -6,8 +6,8 @@ export function useHoverInfo() {
 
   function setWordHover(word) {
     const phones = word?.phones?.join(" ") || "";
-    console.log("🔤 Hovered Word:", word?.text);
-    console.log("📞 Phones:", phones);
+    // console.log("🔤 Hovered Word:", word?.text);
+    // console.log("📞 Phones:", phones);
 
     setHoverData({
       type: "word",

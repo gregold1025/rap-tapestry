@@ -1,6 +1,6 @@
 import { computeLayout } from "./computeTapestryLayout";
 import transcriptionData from "../../../assets/93Til/lyric-transcription.json";
-import paddingFactor from "../../../constants/canvasPadding";
+import { paddingFactor } from "../../../constants/canvasPadding";
 
 export function Playhead({ width, height, time }) {
   // Pull consistent layout settings
