@@ -1,114 +1,76 @@
-// src/components/LyricsView/hooks/SyllableSelectionContext.js
+// File: src/components/LyricsView/hooks/SyllableSelectionContext.js
+
 import { createContext, useContext, useState, useMemo } from "react";
 import transcriptionData from "../../../assets/93Til/lyric-transcription.json";
 import { extractVowels } from "../../../utils/extractVowels";
-import {
-  MAX_WILDCARD_SKIPS,
-  MINIMUM_MATCH_LENGTH,
-} from "../../../constants/matching";
+import { useParams } from "../../../contexts/ParamsContext";
 
 const SyllableSelectionContext = createContext();
 
 export function SyllableSelectionProvider({ children }) {
   const [clicks, setClicks] = useState([]);
+  const { wildcardSkips, minMatchLen, vowelColors } = useParams(); // grab all matching params and palette
 
-  function handleSyllableClick(id, vowel) {
-    setClicks((prev) => {
-      const updated = [...prev, { id, vowel }];
-      return updated.slice(-2); // Only keep last 2
-    });
-  }
+  const handleSyllableClick = (id, vowel) =>
+    setClicks((prev) => [...prev, { id, vowel }].slice(-2));
 
-  // Compute selection info
   const selectedIds = useMemo(() => clicks.map((c) => c.id), [clicks]);
+
   const selectedVowels = useMemo(() => {
     if (clicks.length < 2) return [];
-
-    const flatSyllables = [];
-
-    transcriptionData.lines.forEach((line, lineIdx) => {
-      line.words?.forEach((word, wordIdx) => {
-        const vowels = extractVowels(word.phones);
-        vowels.forEach((vowel, sylIdx) => {
-          flatSyllables.push({
-            id: `${lineIdx}-${wordIdx}-${sylIdx}`,
-            vowel,
-          });
-        });
-      });
-    });
-
-    const startIndex = flatSyllables.findIndex((s) => s.id === clicks[0].id);
-    const endIndex = flatSyllables.findIndex((s) => s.id === clicks[1].id);
-
-    if (startIndex === -1 || endIndex === -1) return [];
-
-    const [from, to] =
-      startIndex < endIndex ? [startIndex, endIndex] : [endIndex, startIndex];
-
-    return flatSyllables.slice(from, to + 1).map((s) => s.vowel);
+    const flat = [];
+    transcriptionData.lines.forEach((line, li) =>
+      line.words?.forEach((w, wi) => {
+        extractVowels(w.phones).forEach((v, si) =>
+          flat.push({ id: `${li}-${wi}-${si}`, vowel: v })
+        );
+      })
+    );
+    const start = flat.findIndex((s) => s.id === clicks[0].id);
+    const end = flat.findIndex((s) => s.id === clicks[1].id);
+    if (start < 0 || end < 0) return [];
+    const [a, b] = start < end ? [start, end] : [end, start];
+    return flat.slice(a, b + 1).map((s) => s.vowel);
   }, [clicks]);
 
   const matchedIds = useMemo(() => {
-    if (selectedVowels.length < 2) return new Set();
+    if (selectedVowels.length < minMatchLen) return new Set();
+    const flat = [];
+    transcriptionData.lines.forEach((line, li) =>
+      line.words?.forEach((w, wi) => {
+        extractVowels(w.phones).forEach((v, si) =>
+          flat.push({ id: `${li}-${wi}-${si}`, vowel: v })
+        );
+      })
+    );
 
-    const flatSyllables = [];
-
-    transcriptionData.lines.forEach((line, lineIdx) => {
-      line.words?.forEach((word, wordIdx) => {
-        const vowels = extractVowels(word.phones?.[0]);
-        vowels.forEach((vowel, sylIdx) => {
-          flatSyllables.push({
-            id: `${lineIdx}-${wordIdx}-${sylIdx}`,
-            vowel,
-          });
-        });
-      });
-    });
-
-    // Generate subsequences of length >= 2
     const subsets = [];
-    for (let start = 0; start < selectedVowels.length; start++) {
-      for (
-        let end = start + MINIMUM_MATCH_LENGTH;
-        end <= selectedVowels.length;
-        end++
-      ) {
-        subsets.push(selectedVowels.slice(start, end));
+    for (let s = 0; s < selectedVowels.length; s++) {
+      for (let e = s + minMatchLen; e <= selectedVowels.length; e++) {
+        subsets.push(selectedVowels.slice(s, e));
       }
     }
 
     const matches = new Set();
-
-    for (const pattern of subsets) {
-      for (let i = 0; i < flatSyllables.length; i++) {
-        let patternIdx = 0;
-        let wildcardCount = 0;
-        const matchIds = [];
-
-        for (
-          let j = i;
-          j < flatSyllables.length && patternIdx < pattern.length;
-          j++
-        ) {
-          const current = flatSyllables[j];
-          if (current.vowel === pattern[patternIdx]) {
-            matchIds.push(current.id);
-            patternIdx++;
+    subsets.forEach((pattern) => {
+      for (let i = 0; i < flat.length; i++) {
+        let pi = 0,
+          wc = 0,
+          ids = [];
+        for (let j = i; j < flat.length && pi < pattern.length; j++) {
+          if (flat[j].vowel === pattern[pi]) {
+            ids.push(flat[j].id);
+            pi++;
           } else {
-            wildcardCount++;
-            if (wildcardCount > MAX_WILDCARD_SKIPS) break;
+            wc++;
+            if (wc > wildcardSkips) break;
           }
         }
-
-        if (patternIdx === pattern.length) {
-          matchIds.forEach((id) => matches.add(id));
-        }
+        if (pi === pattern.length) ids.forEach((id) => matches.add(id));
       }
-    }
-
+    });
     return matches;
-  }, [selectedVowels]);
+  }, [selectedVowels, wildcardSkips, minMatchLen]);
 
   return (
     <SyllableSelectionContext.Provider
@@ -117,6 +79,7 @@ export function SyllableSelectionProvider({ children }) {
         selectedVowels,
         matchedIds,
         handleSyllableClick,
+        vowelColors, // directly from ParamsContext
       }}
     >
       {children}

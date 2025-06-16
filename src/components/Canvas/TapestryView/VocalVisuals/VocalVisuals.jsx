@@ -1,11 +1,13 @@
 // File: src/components/Canvas/TapestryView/VocalVisuals/VocalVisuals.jsx
 
+import React from "react";
 import transcriptionData from "../../../../assets/93Til/lyric-transcription.json";
 import { computeLayout } from "../computeTapestryLayout";
 import { computeSyllableCircles } from "./computeSyllableCircles";
 import { computeWordRectangles } from "./computeWordRectangles";
 import { paddingFactor } from "../../../../constants/canvasPadding";
 import { useSyllableSelection } from "../../../LyricsView/hooks/SyllableSelectionContext";
+import { useParams } from "../../../../contexts/ParamsContext";
 
 export function VocalVisuals({
   width,
@@ -18,6 +20,8 @@ export function VocalVisuals({
     width,
     height,
   });
+  const { showVocals } = useParams();
+  const { selectedIds, matchedIds, vowelColors } = useSyllableSelection();
 
   const timeToX = (t) =>
     (t % secondsPerRow) * ((totalWidth * paddingFactor) / secondsPerRow);
@@ -31,46 +35,38 @@ export function VocalVisuals({
       })
     : [];
 
-  const syllables = showSyllables
-    ? computeSyllableCircles({
-        lines: transcriptionData.lines,
-        timeToX,
-        rowHeight,
-        secondsPerRow,
-      })
-    : [];
-
-  const { selectedIds, matchedIds } = useSyllableSelection();
+  const syllables =
+    showSyllables && showVocals
+      ? computeSyllableCircles({
+          lines: transcriptionData.lines,
+          timeToX,
+          rowHeight,
+          secondsPerRow,
+          vowelColors,
+        })
+      : [];
 
   const draw = (g) => {
     g.clear();
-
     if (showWordRects) {
-      words.forEach((word) => {
-        g.setStrokeStyle({ width: 1, color: 0x000000, alpha: 1 });
-        g.moveTo(word.x, word.y)
+      words.forEach((word) =>
+        g
+          .setStrokeStyle({ width: 1, color: 0x000000, alpha: 1 })
+          .moveTo(word.x, word.y)
           .lineTo(word.x, word.y + word.height * 0.01)
           .moveTo(word.x, word.y)
           .lineTo(word.x + word.width, word.y)
           .moveTo(word.x + word.width, word.y)
           .lineTo(word.x + word.width, word.y + word.height * 0.99)
-          .stroke();
-      });
+          .stroke()
+      );
     }
-
-    if (showSyllables) {
+    if (showSyllables && showVocals) {
       syllables.forEach((syl) => {
-        const isSelected = selectedIds.includes(syl.id);
+        const isSel = selectedIds.includes(syl.id);
         const isMatch = matchedIds.has(syl.id);
-
-        const fillColor = isSelected || isMatch ? syl.color : 0xcccccc;
-
-        g.fill(fillColor).circle(syl.x, syl.y, syl.radius);
-
-        if (isSelected) {
-          //g.setStrokeStyle({ width: 2, color: 0xff0000 });
-          //g.stroke();
-        }
+        const fill = isSel || isMatch ? syl.color : 0xcccccc;
+        g.fill(fill).circle(syl.x, syl.y, syl.radius);
       });
     }
   };

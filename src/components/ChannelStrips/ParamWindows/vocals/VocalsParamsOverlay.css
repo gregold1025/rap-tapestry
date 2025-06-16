@@ -1,0 +1,96 @@
+.vocals-params-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.vocals-params-window {
+  background: white;
+  border-radius: 4px;
+  width: 400px;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.vocals-params-window header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.vocals-params-window .close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.vocals-params-window .number-controls {
+  padding: 12px;
+  display: flex;
+  gap: 16px;
+}
+
+.vocals-params-window .number-controls label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+.vocals-params-window .number-controls input {
+  width: 60px;
+  margin-top: 4px;
+}
+
+.vocals-params-window .color-palette {
+  padding: 12px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.vocals-params-window .color-palette h3 {
+  margin-top: 0;
+}
+
+.vocals-params-window .palette-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.vocals-params-window .palette-grid label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.vocals-params-window .palette-grid input {
+  margin-top: 4px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  padding: 0;
+}
+
+.vocals-params-window footer {
+  padding: 8px;
+  border-top: 1px solid #ddd;
+  text-align: right;
+}
+
+.vocals-params-window footer button {
+  padding: 6px 12px;
+  cursor: pointer;
+}

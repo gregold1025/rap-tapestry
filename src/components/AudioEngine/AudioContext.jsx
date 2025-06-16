@@ -1,61 +1,62 @@
+// src/components/AudioEngine/AudioContext.jsx
 import { createContext, useContext, useRef, useState, useEffect } from "react";
 import vocalsSrc from "../../assets/93Til/93Til_Vocals.mp3";
+import bassSrc from "../../assets/93Til/93Til_Bass.mp3";
+import drumsSrc from "../../assets/93Til/93Til_Drums.mp3";
+import otherSrc from "../../assets/93Til/93Til_Other.mp3";
 
 const AudioContext = createContext();
 
 export function AudioProvider({ children }) {
-  const audioRef = useRef(new Audio(vocalsSrc));
-  const audio = audioRef.current;
+  // create one Audio element per stem
+  const stems = {
+    vocals: new Audio(vocalsSrc),
+    bass: new Audio(bassSrc),
+    drums: new Audio(drumsSrc),
+    other: new Audio(otherSrc),
+  };
 
+  const audioRefs = useRef(stems);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
   const [duration, setDuration] = useState(0);
 
+  // since all stems are same length, pick one to read metadata
   useEffect(() => {
-    const updateMetadata = () => {
-      setDuration(audio.duration);
-    };
+    const onMeta = () => setDuration(audioRefs.current.vocals.duration);
+    audioRefs.current.vocals.addEventListener("loadedmetadata", onMeta);
+    return () =>
+      audioRefs.current.vocals.removeEventListener("loadedmetadata", onMeta);
+  }, []);
 
-    audio.addEventListener("loadedmetadata", updateMetadata);
-    return () => audio.removeEventListener("loadedmetadata", updateMetadata);
-  }, [audio]);
-
-  const togglePlay = () => {
-    if (audio.paused) {
-      audio.play();
-      setIsPlaying(true);
-    } else {
-      audio.pause();
-      setIsPlaying(false);
-    }
+  const playAll = () => {
+    Object.values(audioRefs.current).forEach((a) => a.play());
+    setIsPlaying(true);
   };
-
-  const stop = () => {
-    audio.pause();
-    audio.currentTime = 0;
+  const pauseAll = () => {
+    Object.values(audioRefs.current).forEach((a) => a.pause());
     setIsPlaying(false);
   };
-
-  const seek = (time) => {
-    audio.currentTime = time;
+  const stopAll = () => {
+    Object.values(audioRefs.current).forEach((a) => {
+      a.pause();
+      a.currentTime = 0;
+    });
+    setIsPlaying(false);
   };
-
-  const toggleMute = () => {
-    audio.muted = !audio.muted;
-    setIsMuted(audio.muted);
+  const seekAll = (t) => {
+    Object.values(audioRefs.current).forEach((a) => (a.currentTime = t));
   };
 
   return (
     <AudioContext.Provider
       value={{
-        audioRef,
+        audioRefs, // useRef({ vocals, bass, drums, other })
         isPlaying,
-        togglePlay,
-        stop,
-        seek,
         duration,
-        isMuted,
-        toggleMute,
+        playAll,
+        pauseAll,
+        stopAll,
+        seekAll,
       }}
     >
       {children}

@@ -1,0 +1,64 @@
+/* File: src/components/ChannelStrips/ChannelStrip.css */
+
+/* each strip fills its grid cell and keeps ratio */
+.channel-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  margin: 0;
+  box-sizing: border-box;
+  aspect-ratio: 1 / 3.5;
+}
+.volume-fader {
+  writing-mode: vertical-lr; /* vertical track */
+  direction: rtl; /* invert min/max */
+  width: 50px;
+  height: 240px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  -webkit-appearance: none; /* remove default styling */
+  background: #ddd; /* basic track color */
+}
+
+.volume-fader::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #666;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+  grid-template-rows: repeat(2, 100px);
+  gap: 4px;
+}
+
+.button-grid button {
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.button-grid button.active {
+  background: #ccc;
+}
+
+/* container switches to a grid so strips scale to fill */
+.channel-strips-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 8px;
+  padding: 8px;
+  height: 100%;
+  box-sizing: border-box;
+}

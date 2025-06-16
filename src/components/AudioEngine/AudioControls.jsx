@@ -1,18 +1,36 @@
-// src/components/AudioEngine/AudioControls.jsx
+// File: src/components/AudioEngine/AudioControls.jsx
+
+import React, { useState, useEffect } from "react";
 import { useAudioEngine } from "./AudioContext";
 import { PlayPauseButton } from "./UIElements/PlayPauseButton";
 import { StopButton } from "./UIElements/StopButton";
 import { ScrubSlider } from "./UIElements/ScrubSlider";
-import { MuteButton } from "./UIElements/MuteButton";
-import { useEffect } from "react";
 
 export function AudioControls({ onTimeUpdate }) {
-  const audio = useAudioEngine();
+  const {
+    audioRefs,
+    isPlaying,
+    duration,
+    playAll,
+    pauseAll,
+    stopAll,
+    seekAll,
+  } = useAudioEngine();
 
-  // Notify parent (e.g., AppCanvas) when time updates
+  // local state so slider re-renders with current time
+  const [currentTime, setCurrentTime] = useState(0);
+
   useEffect(() => {
-    onTimeUpdate?.(audio.currentTime);
-  }, [audio.currentTime, onTimeUpdate]);
+    let rafId;
+    const update = () => {
+      const t = audioRefs.current.vocals.currentTime;
+      setCurrentTime(t);
+      onTimeUpdate?.(t);
+      rafId = requestAnimationFrame(update);
+    };
+    rafId = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(rafId);
+  }, [audioRefs, onTimeUpdate]);
 
   return (
     <div
@@ -23,14 +41,19 @@ export function AudioControls({ onTimeUpdate }) {
         padding: "8px",
       }}
     >
-      <PlayPauseButton isPlaying={audio.isPlaying} onClick={audio.togglePlay} />
-      <StopButton onClick={audio.stop} />
-      <ScrubSlider
-        value={audio.currentTime}
-        max={audio.duration}
-        onChange={audio.seek}
+      <PlayPauseButton
+        isPlaying={isPlaying}
+        onClick={() => (isPlaying ? pauseAll() : playAll())}
       />
-      <MuteButton isMuted={audio.isMuted} onClick={audio.toggleMute} />
+      <StopButton onClick={stopAll} />
+
+      {/* make slider twice as long */}
+      <ScrubSlider
+        value={currentTime}
+        max={duration}
+        onChange={seekAll}
+        style={{ width: "400px" }}
+      />
     </div>
   );
 }
