@@ -21,7 +21,7 @@ import { LyricsView } from "./components/LyricsView/LyricsView";
 import { SyllableSelectionProvider } from "./components/LyricsView/hooks/SyllableSelectionContext";
 
 // PARAMS CONTEXT (for future mutability)
-import { ParamsProvider } from "./contexts/ParamsContext";
+import { ParamsProvider } from "./components/ChannelStrips/ParamsContext";
 
 // UTILS
 import { calculateCanvasSize } from "./utils/calculateCanvasSize";

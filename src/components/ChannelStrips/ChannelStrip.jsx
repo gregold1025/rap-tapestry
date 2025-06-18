@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import "./ChannelStrip.css";
-import { useParams } from "../../contexts/ParamsContext";
+import { useParams } from "./ParamsContext";
 
 /**
  * Generic ChannelStrip for any stem

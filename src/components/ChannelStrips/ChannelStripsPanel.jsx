@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAudioEngine } from "../AudioEngine/AudioContext";
-import { useParams } from "../../contexts/ParamsContext";
+import { useParams } from "./ParamsContext";
 import { ChannelStrip } from "./ChannelStrip";
 import { VocalsParamsOverlay } from "./ParamWindows/vocals/VocalsParamsOverlay";
 import "./ChannelStrip.css";

@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useMemo } from "react";
 import transcriptionData from "../../../assets/93Til/lyric-transcription.json";
 import { extractVowels } from "../../../utils/extractVowels";
-import { useParams } from "../../../contexts/ParamsContext";
+import { useParams } from "../../ChannelStrips/ParamsContext";
 
 const SyllableSelectionContext = createContext();
 

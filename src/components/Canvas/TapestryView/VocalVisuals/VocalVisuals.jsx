@@ -7,7 +7,7 @@ import { computeSyllableCircles } from "./computeSyllableCircles";
 import { computeWordRectangles } from "./computeWordRectangles";
 import { paddingFactor } from "../../../../constants/canvasPadding";
 import { useSyllableSelection } from "../../../LyricsView/hooks/SyllableSelectionContext";
-import { useParams } from "../../../../contexts/ParamsContext";
+import { useParams } from "../../../ChannelStrips/ParamsContext";
 
 export function VocalVisuals({
   width,
