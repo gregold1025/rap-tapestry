@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "../../ParamsContext";
 import {
   MAX_WILDCARD_SKIPS,
   MINIMUM_MATCH_LENGTH,
@@ -6,25 +7,53 @@ import {
 import vowelColors from "../../../../constants/vowelColors";
 import "./VocalsParamsOverlay.css";
 
-export function VocalsParamsOverlay({
-  initialWildcard = MAX_WILDCARD_SKIPS,
-  initialMinMatch = MINIMUM_MATCH_LENGTH,
-  initialColors = vowelColors,
-  onSave,
-  onClose,
-}) {
-  const [wildcard, setWildcard] = useState(initialWildcard);
-  const [minMatch, setMinMatch] = useState(initialMinMatch);
+export function VocalsParamsOverlay({ onClose }) {
+  const {
+    wildcardSkips,
+    setWildcardSkips,
+    minMatchLen,
+    setMinMatchLen,
+    vowelColors: contextVowelColors,
+    setVowelColors,
+  } = useParams();
+
+  // Local state initialized from context
+  const [wildcard, setWildcard] = useState(wildcardSkips);
+  const [minMatch, setMinMatch] = useState(minMatchLen);
   const [colors, setColors] = useState(
-    Object.keys(initialColors).length > 0 ? initialColors : vowelColors
+    Object.keys(contextVowelColors).length > 0
+      ? contextVowelColors
+      : vowelColors
   );
 
-  const handleColorChange = (vowel, ev) => {
-    setColors((c) => ({ ...c, [vowel]: ev.target.value }));
+  useEffect(() => {
+    setWildcard(wildcardSkips);
+  }, [wildcardSkips]);
+
+  useEffect(() => {
+    setMinMatch(minMatchLen);
+  }, [minMatchLen]);
+
+  useEffect(() => {
+    setColors(contextVowelColors);
+  }, [contextVowelColors]);
+
+  const handleWildcardChange = (e) => {
+    const val = Number(e.target.value);
+    setWildcard(val);
+    setWildcardSkips(val);
   };
 
-  const handleSave = () => {
-    onSave({ wildcard, minMatch, colors });
+  const handleMinMatchChange = (e) => {
+    const val = Number(e.target.value);
+    setMinMatch(val);
+    setMinMatchLen(val);
+  };
+
+  const handleColorChange = (vowel, e) => {
+    const newColors = { ...colors, [vowel]: e.target.value };
+    setColors(newColors);
+    setVowelColors(newColors);
   };
 
   return (
@@ -45,7 +74,7 @@ export function VocalsParamsOverlay({
               min={0}
               max={3}
               value={wildcard}
-              onChange={(e) => setWildcard(Number(e.target.value))}
+              onChange={handleWildcardChange}
             />
           </label>
           <label>
@@ -55,7 +84,7 @@ export function VocalsParamsOverlay({
               min={0}
               max={3}
               value={minMatch}
-              onChange={(e) => setMinMatch(Number(e.target.value))}
+              onChange={handleMinMatchChange}
             />
           </label>
         </section>
@@ -77,7 +106,7 @@ export function VocalsParamsOverlay({
         </section>
 
         <footer>
-          <button onClick={handleSave}>Save</button>
+          <button onClick={onClose}>Close</button>
         </footer>
       </div>
     </div>

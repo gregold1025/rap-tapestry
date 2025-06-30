@@ -1,96 +1,120 @@
 .vocals-params-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .vocals-params-window {
   background: white;
-  border-radius: 4px;
-  width: 400px;
-  max-height: 90%;
+  border-radius: 12px;
+  width: 800px;
+  max-width: 90vw;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  font-family: sans-serif;
 }
 
 .vocals-params-window header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  border-bottom: 1px solid #ddd;
+  padding: 24px;
+  border-bottom: 2px solid #ddd;
+  font-size: 1.8rem;
+  background: #f5f5f5;
 }
 
 .vocals-params-window .close-btn {
   background: none;
   border: none;
-  font-size: 1.2rem;
+  font-size: 2rem;
   cursor: pointer;
+  color: #333;
 }
 
-.vocals-params-window .number-controls {
-  padding: 12px;
-  display: flex;
-  gap: 16px;
-}
-
-.vocals-params-window .number-controls label {
+.vocals-params-window .number-controls,
+.vocals-params-window .color-palette,
+.vocals-params-window .color-control {
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  font-size: 0.9rem;
+  gap: 24px;
+  font-size: 1.4rem;
 }
 
-.vocals-params-window .number-controls input {
-  width: 60px;
-  margin-top: 4px;
+.vocals-params-window label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+  gap: 12px;
+}
+
+.vocals-params-window input[type="number"],
+.vocals-params-window input[type="color"],
+.vocals-params-window input[type="range"] {
+  padding: 8px;
+  font-size: 1.4rem;
+  width: 100%;
+}
+
+.vocals-params-window input[type="range"] {
+  height: 2rem;
 }
 
 .vocals-params-window .color-palette {
-  padding: 12px;
   overflow-y: auto;
   flex: 1;
 }
 
 .vocals-params-window .color-palette h3 {
   margin-top: 0;
+  font-size: 1.6rem;
 }
 
 .vocals-params-window .palette-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 16px;
 }
 
 .vocals-params-window .palette-grid label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 
-.vocals-params-window .palette-grid input {
-  margin-top: 4px;
-  width: 32px;
-  height: 32px;
+.vocals-params-window .palette-grid input[type="color"] {
+  margin-top: 8px;
+  width: 48px;
+  height: 48px;
   border: none;
   padding: 0;
 }
 
 .vocals-params-window footer {
-  padding: 8px;
-  border-top: 1px solid #ddd;
+  padding: 20px;
+  border-top: 2px solid #ddd;
   text-align: right;
+  background: #f5f5f5;
 }
 
 .vocals-params-window footer button {
-  padding: 6px 12px;
+  padding: 12px 24px;
+  font-size: 1.2rem;
   cursor: pointer;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
 }

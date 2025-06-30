@@ -6,6 +6,7 @@ import { useParams } from "./ParamsContext";
 import { ChannelStrip } from "./ChannelStrip";
 import { VocalsParamsOverlay } from "./ParamWindows/vocals/VocalsParamsOverlay";
 import "./ChannelStrip.css";
+import { BassParamsOverlay } from "./ParamWindows/bass/BassParamsOverlay";
 
 export function ChannelStripsPanel({ onEditClick }) {
   const { audioRefs } = useAudioEngine();
@@ -27,6 +28,17 @@ export function ChannelStripsPanel({ onEditClick }) {
 
   // which stem’s params window is open
   const [editingStem, setEditingStem] = useState(null);
+
+  const [bassParams, setBassParams] = useState({
+    rectHeight: 10,
+    fillColor: "#aaccff",
+    opacity: 0.7,
+  });
+
+  const handleSaveBassParams = ({ rectHeight, fillColor, opacity }) => {
+    setBassParams({ rectHeight, fillColor, opacity });
+    setEditingStem(null);
+  };
 
   const handleMute = (stemKey, isMuted) =>
     (audioRefs.current[stemKey].muted = isMuted);
@@ -66,6 +78,15 @@ export function ChannelStripsPanel({ onEditClick }) {
           initialMinMatch={minMatchLen}
           initialColors={vowelColors}
           onSave={handleSaveParams}
+          onClose={handleCloseOverlay}
+        />
+      )}
+      {editingStem === "bass" && (
+        <BassParamsOverlay
+          initialHeight={bassParams.rectHeight}
+          initialColor={bassParams.fillColor}
+          initialOpacity={bassParams.opacity}
+          onSave={handleSaveBassParams}
           onClose={handleCloseOverlay}
         />
       )}

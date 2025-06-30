@@ -27,7 +27,7 @@ export function computeSyllableCircles({
       for (let i = 0; i < syllableCount; i++) {
         const syllableTime = word.start + (wordDuration * i) / syllableCount;
         const vowel = vowels[i] ?? "AH";
-        const colorHex = vowelColors[vowel] ?? "#cccccc";
+        const colorHex = vowelColors[vowel] ?? "#ffffff";
         const color = parseInt(colorHex.replace("#", "0x"));
 
         const centroidIndex = Math.floor(i * centroidSpacing);

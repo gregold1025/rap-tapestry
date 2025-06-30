@@ -1,5 +1,3 @@
-// File: src/contexts/ParamsContext.jsx
-
 import React, { createContext, useContext, useState } from "react";
 
 const ParamsContext = createContext();
@@ -24,22 +22,34 @@ export function ParamsProvider({ children }) {
     OY: "#3cb6a2",
     UH: "#f4511e",
     UW: "#5c6bc0",
-  }); // will default inside selection
+  });
+
+  const [showBass, setShowBass] = useState(true);
+
+  const [bassParams, setBassParams] = useState({
+    rectHeight: 10,
+    fillColor: "#aaccff",
+    opacity: 0.7,
+  });
 
   return (
     <ParamsContext.Provider
       value={{
+        // Vocals
         showVocals,
         setShowVocals,
-
         wildcardSkips,
         setWildcardSkips,
-
         minMatchLen,
         setMinMatchLen,
-
         vowelColors,
         setVowelColors,
+
+        // Bass
+        showBass,
+        setShowBass,
+        bassParams,
+        setBassParams,
       }}
     >
       {children}

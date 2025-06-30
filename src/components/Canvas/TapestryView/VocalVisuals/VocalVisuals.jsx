@@ -65,7 +65,7 @@ export function VocalVisuals({
       syllables.forEach((syl) => {
         const isSel = selectedIds.includes(syl.id);
         const isMatch = matchedIds.has(syl.id);
-        const fill = isSel || isMatch ? syl.color : 0xcccccc;
+        const fill = isSel || isMatch ? syl.color : 0xffffff;
         g.fill(fill).circle(syl.x, syl.y, syl.radius);
       });
     }

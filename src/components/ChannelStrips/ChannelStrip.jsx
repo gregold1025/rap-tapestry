@@ -32,7 +32,7 @@ export function ChannelStrip({
   const [visible, setVisible] = useState(initialVisible);
 
   // Grab the ParamsContext setter for the vocal-visibility flag
-  const { setShowVocals } = useParams();
+  const { setShowVocals, setShowBass } = useParams();
 
   useEffect(() => {
     if (audio) {
@@ -50,6 +50,7 @@ export function ChannelStrip({
     if (stemKey === "vocals") {
       setShowVocals(next);
     }
+    if (stemKey === "bass") setShowBass(next);
   };
 
   return (
