@@ -24,6 +24,9 @@ export function ParamsProvider({ children }) {
     UW: "#5c6bc0",
   });
 
+  const [inactiveSyllableColor, setInactiveSyllableColor] = useState("#ffffff");
+  const [showWordRects, setShowWordRects] = useState(true);
+
   const [showBass, setShowBass] = useState(true);
 
   const [bassParams, setBassParams] = useState({
@@ -44,6 +47,10 @@ export function ParamsProvider({ children }) {
         setMinMatchLen,
         vowelColors,
         setVowelColors,
+        inactiveSyllableColor,
+        setInactiveSyllableColor,
+        showWordRects,
+        setShowWordRects,
 
         // Bass
         showBass,

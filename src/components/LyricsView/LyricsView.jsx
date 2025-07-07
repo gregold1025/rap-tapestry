@@ -33,7 +33,7 @@ export function LyricsView({ playheadTime, height }) {
       className="lyrics-container"
       style={{
         height,
-        overflow: "hidden",
+        overflow: "clip",
         padding: "12px",
         display: "flex",
         flexDirection: "column",

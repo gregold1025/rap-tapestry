@@ -9,18 +9,13 @@ import { paddingFactor } from "../../../../constants/canvasPadding";
 import { useSyllableSelection } from "../../../LyricsView/hooks/SyllableSelectionContext";
 import { useParams } from "../../../ChannelStrips/ParamsContext";
 
-export function VocalVisuals({
-  width,
-  height,
-  showSyllables = true,
-  showWordRects = true,
-}) {
+export function VocalVisuals({ width, height, showSyllables = true }) {
   const { secondsPerRow, rowHeight, totalWidth } = computeLayout({
     transcriptionData,
     width,
     height,
   });
-  const { showVocals } = useParams();
+  const { showVocals, showWordRects, inactiveSyllableColor } = useParams();
   const { selectedIds, matchedIds, vowelColors } = useSyllableSelection();
 
   const timeToX = (t) =>
@@ -65,7 +60,12 @@ export function VocalVisuals({
       syllables.forEach((syl) => {
         const isSel = selectedIds.includes(syl.id);
         const isMatch = matchedIds.has(syl.id);
-        const fill = isSel || isMatch ? syl.color : 0xffffff;
+        const inactiveColorHex = parseInt(
+          inactiveSyllableColor.replace("#", "0x"),
+          16
+        );
+        const fill = isSel || isMatch ? syl.color : inactiveColorHex;
+
         g.fill(fill).circle(syl.x, syl.y, syl.radius);
       });
     }

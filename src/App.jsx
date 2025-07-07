@@ -90,9 +90,7 @@ function AppWithAudio() {
       minMatchLen={vocalsParams.minMatchLen}
       vowelColors={vocalsParams.vowelColors}
     >
-      <div
-        style={{ display: "flex", flexDirection: "column", height: "100vh" }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", height: "90vh" }}>
         {/* ── MOSAIC GRID ──────────────────────────────────────────────── */}
         <div style={{ display: "flex", flex: 1 }}>
           {/* LEFT: tapestry */}
@@ -120,7 +118,10 @@ function AppWithAudio() {
             }}
           >
             <div style={{ flex: 1, overflow: "auto" }}>
-              <LyricsView playheadTime={playheadTime} height={height * 0.5} />
+              <LyricsView playheadTime={playheadTime} height={height * 0.3} />
+            </div>
+            <div style={{ height: FOOTER_HEIGHT }}>
+              <AudioControls playheadTime={playheadTime} />
             </div>
             <div style={{ flex: 1, overflow: "auto" }}>
               <ChannelStripsPanel onSaveVocalsParams={handleSaveVocalsParams} />
@@ -129,9 +130,6 @@ function AppWithAudio() {
         </div>
 
         {/* ── FOOTER: global controls ─────────────────────────────────── */}
-        <div style={{ height: FOOTER_HEIGHT }}>
-          <AudioControls playheadTime={playheadTime} />
-        </div>
       </div>
     </SyllableSelectionProvider>
   );

@@ -15,6 +15,10 @@ export function VocalsParamsOverlay({ onClose }) {
     setMinMatchLen,
     vowelColors: contextVowelColors,
     setVowelColors,
+    inactiveSyllableColor,
+    setInactiveSyllableColor,
+    showWordRects,
+    setShowWordRects,
   } = useParams();
 
   // Local state initialized from context
@@ -103,6 +107,26 @@ export function VocalsParamsOverlay({ onClose }) {
               </label>
             ))}
           </div>
+        </section>
+        <section className="color-control">
+          <label>
+            Inactive Syllable Color:
+            <input
+              type="color"
+              value={inactiveSyllableColor}
+              onChange={(e) => setInactiveSyllableColor(e.target.value)}
+            />
+          </label>
+        </section>
+        <section className="toggle-control">
+          <label>
+            Show Word Rectangles
+            <input
+              type="checkbox"
+              checked={showWordRects}
+              onChange={(e) => setShowWordRects(e.target.checked)}
+            />
+          </label>
         </section>
 
         <footer>
