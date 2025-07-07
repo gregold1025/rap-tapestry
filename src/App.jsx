@@ -91,46 +91,79 @@ function AppWithAudio() {
       minMatchLen={vocalsParams.minMatchLen}
       vowelColors={vocalsParams.vowelColors}
     >
-      <div style={{ display: "flex", flexDirection: "column", height: "90vh" }}>
-        {/* ── MOSAIC GRID ──────────────────────────────────────────────── */}
-        <div style={{ display: "flex", flex: 1 }}>
-          {/* LEFT: tapestry */}
-          <div style={{ width: tapestryWidth, padding: 5 }}>
-            <Application
+      <div
+        style={{
+          display: "flex",
+          height: "100vh",
+          width: "100vw",
+          overflow: "hidden",
+        }}
+      >
+        {/* LEFT: tapestry */}
+        <div
+          style={{
+            flex: "0 0 60%",
+            padding: 5,
+            boxSizing: "border-box",
+            overflow: "hidden",
+          }}
+        >
+          <Application
+            width={tapestryWidth - 10}
+            height={height}
+            options={{ backgroundColor: 0xffffff, antialias: true }}
+          >
+            <AppCanvas
               width={tapestryWidth - 10}
               height={height}
-              options={{ backgroundColor: 0xffffff, antialias: true }}
-            >
-              <AppCanvas
-                width={tapestryWidth - 10}
-                height={height}
-                playheadTime={playheadTime}
-                audioRefs={audioRefs}
-              />
-            </Application>
-          </div>
-
-          {/* RIGHT: lyrics + channels */}
-          <div
-            style={{
-              width: rightWidth,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div style={{ flex: 1, overflow: "auto" }}>
-              <LyricsView playheadTime={playheadTime} height={height * 0.3} />
-            </div>
-            <div style={{ height: FOOTER_HEIGHT }}>
-              <AudioControls playheadTime={playheadTime} />
-            </div>
-            <div style={{ flex: 1, overflow: "auto" }}>
-              <ChannelStripsPanel onSaveVocalsParams={handleSaveVocalsParams} />
-            </div>
-          </div>
+              playheadTime={playheadTime}
+              audioRefs={audioRefs}
+            />
+          </Application>
         </div>
 
-        {/* ── FOOTER: global controls ─────────────────────────────────── */}
+        {/* RIGHT: lyrics + channels */}
+        <div
+          style={{
+            flex: "0 0 40%",
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            boxSizing: "border-box",
+            overflow: "hidden",
+          }}
+        >
+          {/* LyricsView: top 30% */}
+          <div
+            style={{
+              flex: "0 0 30%",
+              minHeight: "120px",
+              overflow: "auto",
+            }}
+          >
+            <LyricsView playheadTime={playheadTime} />
+          </div>
+
+          {/* AudioControls: fixed footer */}
+          <div
+            style={{
+              flex: `0 0 ${FOOTER_HEIGHT}px`,
+              overflow: "hidden",
+            }}
+          >
+            <AudioControls playheadTime={playheadTime} />
+          </div>
+
+          {/* ChannelStripsPanel: fill remaining */}
+          <div
+            style={{
+              flex: "1 1 0%",
+              overflow: "auto",
+            }}
+          >
+            <ChannelStripsPanel onSaveVocalsParams={handleSaveVocalsParams} />
+          </div>
+        </div>
       </div>
     </SyllableSelectionProvider>
   );

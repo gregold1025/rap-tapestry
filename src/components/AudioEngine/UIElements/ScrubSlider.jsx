@@ -1,4 +1,3 @@
-// src/components/AudioEngine/ScrubSlider.jsx
 export function ScrubSlider({ value, max, onChange }) {
   const handleChange = (e) => {
     onChange(parseFloat(e.target.value));
@@ -12,7 +11,11 @@ export function ScrubSlider({ value, max, onChange }) {
       step="0.01"
       value={value}
       onChange={handleChange}
-      style={{ width: "200px" }}
+      style={{
+        flex: 0.95,
+        width: "100%",
+        boxSizing: "border-box",
+      }}
     />
   );
 }

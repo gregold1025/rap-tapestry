@@ -52,7 +52,7 @@ export function AudioControls({ onTimeUpdate }) {
         value={currentTime}
         max={duration}
         onChange={seekAll}
-        style={{ width: "400px" }}
+        style={{ flex: 1, margin: "0 8px" }}
       />
     </div>
   );
