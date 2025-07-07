@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Application } from "@pixi/react";
+import "./index.css";
 
 // VISUAL CANVAS COMPONENTS
 import { AppCanvas } from "./components/Canvas/AppCanvas";
