@@ -1,6 +1,7 @@
 import { Playhead } from "./Playhead";
 import { VocalVisuals } from "./VocalVisuals/VocalVisuals";
 import { BassVisuals } from "./BassVisuals/BassVisuals";
+import { GridLines } from "./GridLines";
 
 function BackgroundLayer({ width, height }) {
   const draw = (g) => {
@@ -14,8 +15,10 @@ export function TapestryView({ width, height, time }) {
   return (
     <pixiContainer>
       <BackgroundLayer width={width} height={height} />
+
       <BassVisuals width={width} height={height} />
       <VocalVisuals width={width} height={height} />
+      <GridLines width={width} height={height} />
       <Playhead width={width} height={height} time={time} />
     </pixiContainer>
   );
