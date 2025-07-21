@@ -19,6 +19,8 @@ export function VocalsParamsOverlay({ onClose }) {
     setInactiveSyllableColor,
     showWordRects,
     setShowWordRects,
+    evaluateEndRhymes,
+    setEvaluateEndRhymes,
   } = useParams();
 
   // Local state initialized from context
@@ -125,6 +127,16 @@ export function VocalsParamsOverlay({ onClose }) {
               type="checkbox"
               checked={showWordRects}
               onChange={(e) => setShowWordRects(e.target.checked)}
+            />
+          </label>
+        </section>
+        <section className="toggle-control">
+          <label>
+            Evaluate End Rhymes
+            <input
+              type="checkbox"
+              checked={evaluateEndRhymes}
+              onChange={(e) => setEvaluateEndRhymes(e.target.checked)}
             />
           </label>
         </section>

@@ -13,7 +13,7 @@ function BackgroundLayer({ width, height }) {
 
 export function TapestryView({ width, height, time }) {
   return (
-    <pixiContainer>
+    <pixiContainer eventMode="static">
       <BackgroundLayer width={width} height={height} />
 
       <BassVisuals width={width} height={height} />

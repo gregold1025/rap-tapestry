@@ -23,6 +23,7 @@ export function ParamsProvider({ children }) {
     UH: "#f4511e",
     UW: "#5c6bc0",
   });
+  const [evaluateEndRhymes, setEvaluateEndRhymes] = useState(false);
 
   const [inactiveSyllableColor, setInactiveSyllableColor] = useState("#ffffff");
   const [showWordRects, setShowWordRects] = useState(true);
@@ -47,6 +48,9 @@ export function ParamsProvider({ children }) {
         setMinMatchLen,
         vowelColors,
         setVowelColors,
+        evaluateEndRhymes,
+        setEvaluateEndRhymes,
+
         inactiveSyllableColor,
         setInactiveSyllableColor,
         showWordRects,

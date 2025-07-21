@@ -1,6 +1,5 @@
-// src/components/Canvas/TapestryView/VocalVisuals/computeSyllableCircles.js
+// File: src/components/Canvas/TapestryView/VocalVisuals/computeSyllableCircles.js
 
-// import vowelColors from "../../../../constants/vowelColors";
 import { extractVowels } from "../../../../utils/extractVowels";
 
 export function computeSyllableCircles({
@@ -49,6 +48,10 @@ export function computeSyllableCircles({
           radius: 6,
           color,
           vowel,
+          wordText: word.text,
+          lineIndex: lineIdx,
+          startTime: word.start,
+          syllableIndex: i,
         });
       }
     });
