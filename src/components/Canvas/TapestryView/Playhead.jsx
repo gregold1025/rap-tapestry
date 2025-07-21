@@ -25,5 +25,5 @@ export function Playhead({ width, height, time }) {
     g.stroke();
   };
 
-  return <pixiGraphics draw={draw} />;
+  return <pixiGraphics draw={draw} eventMode={"none"} />;
 }

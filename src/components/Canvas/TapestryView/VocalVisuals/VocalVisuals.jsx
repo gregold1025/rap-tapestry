@@ -71,5 +71,5 @@ export function VocalVisuals({ width, height, showSyllables = true }) {
     }
   };
 
-  return <pixiGraphics draw={draw} />;
+  return <pixiGraphics draw={draw} eventMode={"none"} />;
 }

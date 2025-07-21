@@ -65,5 +65,5 @@ export function BassVisuals({ width, height }) {
     });
   };
 
-  return <pixiGraphics draw={draw} />;
+  return <pixiGraphics draw={draw} eventMode={"none"} />;
 }

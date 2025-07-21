@@ -8,7 +8,7 @@ function BackgroundLayer({ width, height }) {
     g.clear();
     g.fill(0xffffff).rect(0, 0, width, height).fill();
   };
-  return <pixiGraphics draw={draw} />;
+  return <pixiGraphics draw={draw} eventMode={"none"} />;
 }
 
 export function TapestryView({ width, height, time }) {

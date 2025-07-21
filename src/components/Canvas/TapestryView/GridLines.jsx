@@ -30,7 +30,7 @@ export function GridLines({ width, height }) {
       if (i % beatsPerBar === 0) {
         g.setStrokeStyle({ width: 3, color: 0x00af00, alpha: 0.8 });
       } else {
-        g.setStrokeStyle({ width: 1, color: 0x00fa00, alpha: 0.4 });
+        g.setStrokeStyle({ width: 1, color: 0x00aa00, alpha: 0.4 });
       }
       g.moveTo(x, 0);
       g.lineTo(x, height);
@@ -38,5 +38,5 @@ export function GridLines({ width, height }) {
     }
   };
 
-  return <pixiGraphics draw={draw} />;
+  return <pixiGraphics draw={draw} eventMode={"none"} />;
 }
